@@ -374,35 +374,11 @@ workflows:
   version: 2
   evmc:
     jobs:
-      - lint
-      - build-clang10-coverage
       - build-gcc8-cxx17
-      - build-gcc10-cxx17-sanitizers
-      - build-clang10-cxx17-sanitizers
       - build-clang9-asan
-      - build-gcc-min
-      - build-clang-min
-      - build-gcc-32bit
-      - build-cmake-min
-      - bindings-go-latest:
-          filters:
-            tags:
-              only: /.*/
-      - bindings-go-min:
-          filters:
-            tags:
-              only: /.*/
-      - bindings-java
       - bindings-rust:
           requires:
             - build-gcc8-cxx17
       - bindings-rust-asan:
           requires:
             - build-clang9-asan
-      - upload-docs:
-          requires:
-            - lint
-          filters:
-            branches:
-              only:
-                - master
