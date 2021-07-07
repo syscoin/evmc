@@ -190,6 +190,20 @@ typedef struct evmc_tx_context (*evmc_get_tx_context_fn)(struct evmc_host_contex
 typedef evmc_bytes32 (*evmc_get_block_hash_fn)(struct evmc_host_context* context, int64_t number);
 
 /**
+ * Get SYS block hash callback function.
+ *
+ * This callback function is used by a VM to query the hash of the header of the given block.
+ * If the information about the requested block is not available, then this is signalled by
+ * returning null bytes.
+ *
+ * @param context  The pointer to the Host execution context.
+ * @param number   The block number.
+ * @return         The block hash or null bytes
+ *                 if the information about the block is not available.
+ */
+typedef evmc_bytes32 (*evmc_read_sys_hash_fn)(struct evmc_host_context* context, int64_t number);
+
+/**
  * The execution status code.
  *
  * Successful execution is represented by ::EVMC_SUCCESS having value 0.
@@ -207,7 +221,7 @@ typedef evmc_bytes32 (*evmc_get_block_hash_fn)(struct evmc_host_context* context
  *
  * @note
  * In case new status codes are needed, please create an issue or pull request
- * in the EVMC repository (https://github.com/ethereum/evmc).
+ * in the EVMC repository (https://github.com/syscoin/evmc).
  */
 enum evmc_status_code
 {
@@ -702,6 +716,9 @@ struct evmc_host_interface
 
     /** Get block hash callback function. */
     evmc_get_block_hash_fn get_block_hash;
+
+    /** Get block hash callback function. */
+    evmc_read_sys_hash_fn read_sys_hash;
 
     /** Emit log callback function. */
     evmc_emit_log_fn emit_log;

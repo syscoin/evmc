@@ -151,6 +151,15 @@ public:
                    0_bytes32;
     }
 
+    evmc::bytes32 read_sys_hash(int64_t number) const noexcept final
+    {
+        const int64_t current_block_number = get_tx_context().block_number;
+
+        return (number < current_block_number && number >= current_block_number - 50000) ?
+                   0xb10c8a5fb10c8a5fb10c8a5fb10c8a5fb10c8a5fb10c8a5fb10c8a5fb10c8a5f_bytes32 :
+                   0_bytes32;
+    }
+
     void emit_log(const evmc::address& addr,
                   const uint8_t* data,
                   size_t data_size,

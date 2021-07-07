@@ -158,6 +158,18 @@ public interface HostContext {
   ByteBuffer getBlockHash(long number);
 
   /**
+   * Get SYS block hash function.
+   *
+   * <p>This function is used by a VM to query the hash of the header of the given block. If the
+   * information about the requested block is not available, then this is signalled by returning
+   * null bytes.
+   *
+   * @param number The block number.
+   * @return The block hash or null bytes if the information about the block is not available.
+   */
+  ByteBuffer readSYSHash(long number);
+
+  /**
    * Log function.
    *
    * <p>This function is used by an EVM to inform about a LOG that happened during an EVM bytecode

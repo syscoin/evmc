@@ -478,6 +478,9 @@ public:
     /// @copydoc evmc_host_interface::get_block_hash
     virtual bytes32 get_block_hash(int64_t block_number) const noexcept = 0;
 
+    /// @copydoc evmc_host_interface::read_sys_hash
+    virtual bytes32 read_sys_hash(int64_t block_number) const noexcept = 0;
+
     /// @copydoc evmc_host_interface::emit_log
     virtual void emit_log(const address& addr,
                           const uint8_t* data,
@@ -579,6 +582,11 @@ public:
     bytes32 get_block_hash(int64_t number) const noexcept final
     {
         return host->get_block_hash(context, number);
+    }
+
+   bytes32 read_sys_hash(int64_t number) const noexcept final
+    {
+        return host->read_sys_hash(context, number);
     }
 
     void emit_log(const address& addr,
@@ -830,6 +838,11 @@ inline evmc_bytes32 get_block_hash(evmc_host_context* h, int64_t block_number) n
     return Host::from_context(h)->get_block_hash(block_number);
 }
 
+inline evmc_bytes32 read_sys_hash(evmc_host_context* h, int64_t block_number) noexcept
+{
+    return Host::from_context(h)->read_sys_hash(block_number);
+}
+
 inline void emit_log(evmc_host_context* h,
                      const evmc_address* addr,
                      const uint8_t* data,
@@ -862,7 +875,7 @@ inline const evmc_host_interface& Host::get_interface() noexcept
         ::evmc::internal::get_code_size,  ::evmc::internal::get_code_hash,
         ::evmc::internal::copy_code,      ::evmc::internal::selfdestruct,
         ::evmc::internal::call,           ::evmc::internal::get_tx_context,
-        ::evmc::internal::get_block_hash, ::evmc::internal::emit_log,
+        ::evmc::internal::get_block_hash, ::evmc::internal::read_sys_hash, ::evmc::internal::emit_log,
         ::evmc::internal::access_account, ::evmc::internal::access_storage,
     };
     return interface;

@@ -70,5 +70,10 @@ class TestHostContext implements HostContext {
   }
 
   @Override
+  public ByteBuffer readSYSHash(long number) {
+    return ByteBuffer.allocateDirect(32).put(new byte[32]);
+  }
+
+  @Override
   public void emitLog(byte[] address, byte[] data, int dataSize, byte[][] topics, int topicCount) {}
 }

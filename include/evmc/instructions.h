@@ -81,6 +81,7 @@ enum evmc_opcode
     OP_CHAINID = 0x46,
     OP_SELFBALANCE = 0x47,
     OP_BASEFEE = 0x48,
+    OP_SYSBLOCKHASH = 0x4f,
 
     OP_POP = 0x50,
     OP_MLOAD = 0x51,

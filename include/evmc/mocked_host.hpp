@@ -115,11 +115,17 @@ public:
     /// The block header hash value to be returned by get_block_hash().
     bytes32 block_hash = {};
 
+    /// The SYS block header hash value to be returned by read_sys_hash().
+    bytes32 sysblock_hash = {};
+
     /// The call result to be returned by the call() method.
     evmc_result call_result = {};
 
     /// The record of all block numbers for which get_block_hash() was called.
     mutable std::vector<int64_t> recorded_blockhashes;
+
+    /// The record of all block numbers for which read_sys_hash() was called.
+    mutable std::vector<int64_t> recorded_sysblockhashes;
 
     /// The record of all account accesses.
     mutable std::vector<address> recorded_account_accesses;
@@ -311,7 +317,12 @@ public:
         recorded_blockhashes.emplace_back(block_number);
         return block_hash;
     }
-
+    /// Get the block header hash (EVMC host method).
+    bytes32 read_sys_hash(int64_t block_number) const noexcept override
+    {
+        recorded_sysblockhashes.emplace_back(block_number);
+        return sysblock_hash;
+    }
     /// Emit LOG (EVMC host method).
     void emit_log(const address& addr,
                   const uint8_t* data,

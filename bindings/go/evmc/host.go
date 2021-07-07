@@ -90,6 +90,7 @@ type HostContext interface {
 	Selfdestruct(addr Address, beneficiary Address)
 	GetTxContext() TxContext
 	GetBlockHash(number int64) Hash
+	ReadSYSHash(number int64) Hash
 	EmitLog(addr Address, topics []Hash, data []byte)
 	Call(kind CallKind,
 		destination Address, sender Address, value Hash, input []byte, gas int64, depth int,
@@ -183,6 +184,12 @@ func getTxContext(pCtx unsafe.Pointer) C.struct_evmc_tx_context {
 func getBlockHash(pCtx unsafe.Pointer, number int64) C.evmc_bytes32 {
 	ctx := getHostContext(uintptr(pCtx))
 	return evmcBytes32(ctx.GetBlockHash(number))
+}
+
+//export readSYSHash
+func readSYSHash(pCtx unsafe.Pointer, number int64) C.evmc_bytes32 {
+	ctx := getHostContext(uintptr(pCtx))
+	return evmcBytes32(ctx.ReadSYSHash(number))
 }
 
 //export emitLog

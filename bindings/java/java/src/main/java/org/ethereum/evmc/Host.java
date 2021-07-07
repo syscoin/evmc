@@ -73,6 +73,11 @@ final class Host {
     return ensureDirectBuffer(context.getBlockHash(number));
   }
 
+  /** Get block hash callback function. */
+  static ByteBuffer read_sys_hash_fn(HostContext context, long number) {
+    return ensureDirectBuffer(context.readSYSHash(number));
+  }
+
   /** Emit log callback function. */
   static void emit_log(
       HostContext context,

@@ -341,6 +341,14 @@ impl<'a> ExecutionContext<'a> {
         }
     }
 
+    /// Get SYS block hash of an account.
+    pub fn read_sys_hash(&self, num: i64) -> Bytes32 {
+        unsafe {
+            assert!((*self.host).read_sys_hash.is_some());
+            (*self.host).read_sys_hash.unwrap()(self.context, num)
+        }
+    }
+
     /// Emit a log.
     pub fn emit_log(&mut self, address: &Address, data: &[u8], topics: &[Bytes32]) {
         unsafe {
@@ -813,6 +821,7 @@ mod tests {
             call: Some(execute_call),
             get_tx_context: Some(get_dummy_tx_context),
             get_block_hash: None,
+            read_sys_hash: None,
             emit_log: None,
             access_account: None,
             access_storage: None,

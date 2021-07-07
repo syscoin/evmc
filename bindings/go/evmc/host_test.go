@@ -52,6 +52,9 @@ func (host *testHostContext) GetBlockHash(number int64) Hash {
 	return Hash{}
 }
 
+func (host *testHostContext) ReadSYSHash(number int64) Hash {
+	return Hash{}
+}
 func (host *testHostContext) EmitLog(addr Address, topics []Hash, data []byte) {
 }
 

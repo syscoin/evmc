@@ -25,6 +25,7 @@ const struct evmc_host_interface evmc_go_host = {
     (evmc_call_fn)call,
     (evmc_get_tx_context_fn)getTxContext,
     (evmc_get_block_hash_fn)getBlockHash,
+    (evmc_read_sys_hash_fn)readSYSHash,
     (evmc_emit_log_fn)emitLog,
     (evmc_access_account_fn)accessAccount,
     (evmc_access_storage_fn)accessStorage,
@@ -98,6 +99,10 @@ static inline void go_exported_functions_type_checks()
     evmc_get_block_hash_fn get_block_hash_fn = NULL;
     bytes32 = get_block_hash_fn(context, number);
     bytes32 = getBlockHash(context, number);
+
+    evmc_read_sys_hash_fn read_sys_hash_fn = NULL;
+    bytes32 = read_sys_hash_fn(context, number);
+    bytes32 = readSYSHash(context, number);
 
     evmc_emit_log_fn emit_log_fn = NULL;
     emit_log_fn(context, address, data, size, &bytes32, size);
